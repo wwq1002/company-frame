@@ -1,0 +1,62 @@
+2022-05-07 21:35:38.379  INFO 72364 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Starting CompanyFrameApplication on DESKTOP-CEN2VU5 with PID 72364 (D:\conpanyframe\target\classes started by Lenovo in D:\conpanyframe)
+2022-05-07 21:35:38.380 DEBUG 72364 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Running with Spring Boot v2.1.6.RELEASE, Spring v5.1.8.RELEASE
+2022-05-07 21:35:38.380  INFO 72364 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : No active profile set, falling back to default profiles: default
+2022-05-07 21:35:38.419  INFO 72364 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-05-07 21:35:38.419  INFO 72364 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-05-07 21:35:38.750  WARN 72364 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.yingxue.lesson]' package. Please check your configuration.
+2022-05-07 21:35:38.772  INFO 72364 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-07 21:35:38.773  INFO 72364 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2022-05-07 21:35:38.783  INFO 72364 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2ms. Found 0 repository interfaces.
+2022-05-07 21:35:38.935  INFO 72364 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$3a08abbb] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-07 21:35:39.111  INFO 72364 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-05-07 21:35:39.124  INFO 72364 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-05-07 21:35:39.125  INFO 72364 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2022-05-07 21:35:39.195  INFO 72364 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-05-07 21:35:39.196  INFO 72364 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 777 ms
+2022-05-07 21:35:39.344  INFO 72364 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-07 21:35:39.480  INFO 72364 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2022-05-07 21:35:39.623  INFO 72364 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2022-05-07 21:35:39.850  INFO 72364 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-05-07 21:35:39.882  INFO 72364 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-05-07 21:35:39.883  INFO 72364 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Started CompanyFrameApplication in 1.696 seconds (JVM running for 2.253)
+2022-05-07 21:49:31.283  INFO 85100 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Starting CompanyFrameApplication on DESKTOP-CEN2VU5 with PID 85100 (D:\conpanyframe\target\classes started by Lenovo in D:\conpanyframe)
+2022-05-07 21:49:31.284 DEBUG 85100 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Running with Spring Boot v2.1.6.RELEASE, Spring v5.1.8.RELEASE
+2022-05-07 21:49:31.284  INFO 85100 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : No active profile set, falling back to default profiles: default
+2022-05-07 21:49:31.317  INFO 85100 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-05-07 21:49:31.317  INFO 85100 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-05-07 21:49:31.642  WARN 85100 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.yingxue.lesson]' package. Please check your configuration.
+2022-05-07 21:49:31.665  INFO 85100 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-07 21:49:31.666  INFO 85100 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2022-05-07 21:49:31.676  INFO 85100 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3ms. Found 0 repository interfaces.
+2022-05-07 21:49:31.844  INFO 85100 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d856e610] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-07 21:49:32.020  INFO 85100 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-05-07 21:49:32.033  INFO 85100 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-05-07 21:49:32.033  INFO 85100 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2022-05-07 21:49:32.100  INFO 85100 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-05-07 21:49:32.101  INFO 85100 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 783 ms
+2022-05-07 21:49:32.235  INFO 85100 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-07 21:49:32.366  INFO 85100 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2022-05-07 21:49:32.513  INFO 85100 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2022-05-07 21:49:32.742  INFO 85100 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-05-07 21:49:32.774  INFO 85100 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-05-07 21:49:32.775  INFO 85100 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Started CompanyFrameApplication in 1.668 seconds (JVM running for 2.216)
+2022-05-07 21:51:25.932  INFO 68968 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Starting CompanyFrameApplication on DESKTOP-CEN2VU5 with PID 68968 (D:\conpanyframe\target\classes started by Lenovo in D:\conpanyframe)
+2022-05-07 21:51:25.934 DEBUG 68968 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Running with Spring Boot v2.1.6.RELEASE, Spring v5.1.8.RELEASE
+2022-05-07 21:51:25.934  INFO 68968 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : No active profile set, falling back to default profiles: default
+2022-05-07 21:51:25.972  INFO 68968 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-05-07 21:51:25.972  INFO 68968 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-05-07 21:51:26.310  INFO 68968 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-07 21:51:26.311  INFO 68968 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2022-05-07 21:51:26.323  INFO 68968 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6ms. Found 0 repository interfaces.
+2022-05-07 21:51:26.488  INFO 68968 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$407904c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-07 21:51:26.661  INFO 68968 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-05-07 21:51:26.673  INFO 68968 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-05-07 21:51:26.674  INFO 68968 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2022-05-07 21:51:26.742  INFO 68968 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-05-07 21:51:26.742  INFO 68968 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 770 ms
+2022-05-07 21:51:26.796  INFO 68968 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2022-05-07 21:51:27.018  INFO 68968 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2022-05-07 21:51:27.213  INFO 68968 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-07 21:51:27.457  INFO 68968 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-05-07 21:51:27.489  INFO 68968 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-05-07 21:51:27.491  INFO 68968 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Started CompanyFrameApplication in 1.743 seconds (JVM running for 2.289)
