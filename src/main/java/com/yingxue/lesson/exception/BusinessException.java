@@ -1,5 +1,7 @@
 package com.yingxue.lesson.exception;
 
+import com.yingxue.lesson.exception.code.ResponseCodeInterface;
+
 public class BusinessException extends RuntimeException {
 
     /**
@@ -17,7 +19,13 @@ public class BusinessException extends RuntimeException {
         this.code = code;
         this.msg = msg;
     }
-
+    /**
+      * 构造函数
+      * @param code 异常码
+      */
+    public BusinessException(ResponseCodeInterface code) {
+            this(code.getCode(), code.getMsg());
+ }
 
     public int getCode() {
         return code;
