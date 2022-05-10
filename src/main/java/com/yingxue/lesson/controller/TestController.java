@@ -4,13 +4,12 @@ import com.yingxue.lesson.entity.SysUser;
 import com.yingxue.lesson.exception.BusinessException;
 import com.yingxue.lesson.exception.code.BaseResponseCode;
 import com.yingxue.lesson.utils.DataResult;
+import com.yingxue.lesson.vo.req.TestReqVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,4 +49,13 @@ public class TestController {
         DataResult<String> result=new DataResult(0,type);
         return result;
     }
+
+    @PostMapping("/test/valid")
+    @ApiOperation(value = "测试校验验证器")
+    public DataResult testValid(@RequestBody @Valid TestReqVO vo){
+        DataResult result=DataResult.success(vo);
+        return result;
+    }
+
+
 }
