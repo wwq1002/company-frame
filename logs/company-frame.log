@@ -1,111 +1,52 @@
-2022-05-10 19:55:10.083  INFO 57216 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Starting CompanyFrameApplication on DESKTOP-CEN2VU5 with PID 57216 (D:\conpanyframe\target\classes started by Lenovo in D:\conpanyframe)
-2022-05-10 19:55:10.087 DEBUG 57216 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Running with Spring Boot v2.1.6.RELEASE, Spring v5.1.8.RELEASE
-2022-05-10 19:55:10.087  INFO 57216 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : No active profile set, falling back to default profiles: default
-2022-05-10 19:55:10.126  INFO 57216 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-05-10 19:55:10.127  INFO 57216 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2022-05-10 19:55:10.645  INFO 57216 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-05-10 19:55:10.646  INFO 57216 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
-2022-05-10 19:55:10.661  INFO 57216 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9ms. Found 0 repository interfaces.
-2022-05-10 19:55:10.836  INFO 57216 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$ff3e1392] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2022-05-10 19:55:11.062  INFO 57216 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2022-05-10 19:55:11.074  INFO 57216 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-05-10 19:55:11.074  INFO 57216 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
-2022-05-10 19:55:11.145  INFO 57216 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-05-10 19:55:11.145  INFO 57216 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1018 ms
-2022-05-10 19:55:11.498  INFO 57216 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
-2022-05-10 19:55:11.515  INFO 57216 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
-2022-05-10 19:55:11.679  INFO 57216 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
-2022-05-10 19:55:11.854  INFO 57216 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2022-05-10 19:55:11.881  INFO 57216 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-05-10 19:55:12.032  INFO 57216 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
-2022-05-10 19:55:12.042  INFO 57216 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
-2022-05-10 19:55:12.059  INFO 57216 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
-2022-05-10 19:55:12.169  INFO 57216 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2022-05-10 19:55:12.171  INFO 57216 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Started CompanyFrameApplication in 2.302 seconds (JVM running for 2.751)
-2022-05-10 19:55:26.999  INFO 57216 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-05-10 19:55:26.999  INFO 57216 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-05-10 19:55:27.003  INFO 57216 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
-2022-05-10 19:55:49.886 ERROR 57216 --- [http-nio-8080-exec-3] c.y.l.e.handler.RestExceptionHandler     : handlerMethodArgumentNotValidException  AllErrors:[Field error in object 'testReqVO' on field 'age': rejected value [null]; codes [NotNull.testReqVO.age,NotNull.age,NotNull.java.lang.Integer,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [testReqVO.age,age]; arguments []; default message [age]]; default message [年龄不能为空]] MethodArgumentNotValidException:{}
-
-org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public com.yingxue.lesson.utils.DataResult com.yingxue.lesson.controller.TestController.testValid(com.yingxue.lesson.vo.req.TestReqVO): [Field error in object 'testReqVO' on field 'age': rejected value [null]; codes [NotNull.testReqVO.age,NotNull.age,NotNull.java.lang.Integer,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [testReqVO.age,age]; arguments []; default message [age]]; default message [年龄不能为空]] 
-	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.resolveArgument(RequestResponseBodyMethodProcessor.java:138) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:126) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:167) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:134) ~[spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:892) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1039) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942) ~[spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:908) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:123) [druid-1.1.10.jar:1.1.10]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:853) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1587) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_131]
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_131]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.21.jar:9.0.21]
-	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_131]
-
-2022-05-10 19:55:49.901  WARN 57216 --- [http-nio-8080-exec-3] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public com.yingxue.lesson.utils.DataResult com.yingxue.lesson.controller.TestController.testValid(com.yingxue.lesson.vo.req.TestReqVO): [Field error in object 'testReqVO' on field 'age': rejected value [null]; codes [NotNull.testReqVO.age,NotNull.age,NotNull.java.lang.Integer,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [testReqVO.age,age]; arguments []; default message [age]]; default message [年龄不能为空]] ]
-2022-05-10 20:23:14.451  INFO 8724 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Starting CompanyFrameApplication on DESKTOP-CEN2VU5 with PID 8724 (D:\conpanyframe\target\classes started by Lenovo in D:\conpanyframe)
-2022-05-10 20:23:14.452 DEBUG 8724 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Running with Spring Boot v2.1.6.RELEASE, Spring v5.1.8.RELEASE
-2022-05-10 20:23:14.452  INFO 8724 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : No active profile set, falling back to default profiles: default
-2022-05-10 20:23:14.485  INFO 8724 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-05-10 20:23:14.486  INFO 8724 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2022-05-10 20:23:14.985  INFO 8724 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-05-10 20:23:14.986  INFO 8724 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
-2022-05-10 20:23:15.004  INFO 8724 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10ms. Found 0 repository interfaces.
-2022-05-10 20:23:15.196  INFO 8724 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$c442f837] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2022-05-10 20:23:15.381  INFO 8724 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2022-05-10 20:23:15.396  INFO 8724 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-05-10 20:23:15.396  INFO 8724 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
-2022-05-10 20:23:15.485  INFO 8724 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-05-10 20:23:15.485  INFO 8724 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 999 ms
-2022-05-10 20:23:15.854  INFO 8724 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
-2022-05-10 20:23:15.871  INFO 8724 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
-2022-05-10 20:23:16.032  INFO 8724 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
-2022-05-10 20:23:16.185  INFO 8724 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2022-05-10 20:23:16.209  INFO 8724 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-05-10 20:23:16.346  INFO 8724 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
-2022-05-10 20:23:16.354  INFO 8724 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
-2022-05-10 20:23:16.370  INFO 8724 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
-2022-05-10 20:23:16.469  INFO 8724 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2022-05-10 20:23:16.470  INFO 8724 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Started CompanyFrameApplication in 2.217 seconds (JVM running for 2.67)
+2022-05-11 20:44:28.450  INFO 71812 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Starting CompanyFrameApplication on DESKTOP-CEN2VU5 with PID 71812 (D:\conpanyframe\target\classes started by Lenovo in D:\conpanyframe)
+2022-05-11 20:44:28.453 DEBUG 71812 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Running with Spring Boot v2.1.6.RELEASE, Spring v5.1.8.RELEASE
+2022-05-11 20:44:28.453  INFO 71812 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : No active profile set, falling back to default profiles: default
+2022-05-11 20:44:28.488  INFO 71812 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-05-11 20:44:28.488  INFO 71812 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-05-11 20:44:29.023  INFO 71812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-05-11 20:44:29.025  INFO 71812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2022-05-11 20:44:29.041  INFO 71812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8ms. Found 0 repository interfaces.
+2022-05-11 20:44:29.223  INFO 71812 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$be9fa38f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-05-11 20:44:29.407  INFO 71812 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-05-11 20:44:29.420  INFO 71812 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-05-11 20:44:29.420  INFO 71812 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2022-05-11 20:44:29.499  INFO 71812 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-05-11 20:44:29.499  INFO 71812 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1011 ms
+2022-05-11 20:44:29.558  INFO 71812 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2022-05-11 20:44:29.789  INFO 71812 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2022-05-11 20:44:30.129  INFO 71812 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2022-05-11 20:44:30.202  INFO 71812 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-05-11 20:44:30.226  INFO 71812 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-05-11 20:44:30.370  INFO 71812 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-05-11 20:44:30.379  INFO 71812 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-05-11 20:44:30.396  INFO 71812 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-05-11 20:44:30.498  INFO 71812 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-05-11 20:44:30.499  INFO 71812 --- [restartedMain] c.y.lesson.CompanyFrameApplication       : Started CompanyFrameApplication in 2.234 seconds (JVM running for 2.68)
+2022-05-11 20:44:47.115  INFO 71812 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-11 20:44:47.115  INFO 71812 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-05-11 20:44:47.119  INFO 71812 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2022-05-11 20:45:11.161 DEBUG 71812 --- [http-nio-8080-exec-3] c.y.l.m.SysUserMapper.selectByUsername   : ==>  Preparing: select id, username, salt, `password`, phone, dept_id, real_name, nick_name, email, `status`, sex, deleted, create_id, update_id, create_where, create_time, update_time from sys_user where username=? and deleted=1 
+2022-05-11 20:45:11.173 DEBUG 71812 --- [http-nio-8080-exec-3] c.y.l.m.SysUserMapper.selectByUsername   : ==> Parameters: admin(String)
+2022-05-11 20:45:11.183 DEBUG 71812 --- [http-nio-8080-exec-3] c.y.l.m.SysUserMapper.selectByUsername   : <==      Total: 1
+2022-05-11 20:45:11.360  INFO 71812 --- [http-nio-8080-exec-3] c.y.lesson.service.impl.UserServiceImpl  : accessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5YTI2ZjVmMS1jYmQyLTQ3M2QtODJkYi0xZDZkY2Y0NTk4ZjgiLCJyb2xlcy1pbmZvcy1rZXkiOlsiYWRtaW4iXSwicGVybWlzc2lvbnMtaW5mb3Mta2V5IjpbInN5czp1c2VyOmFkZCIsInN5czp1c2VyOnVwZGF0ZSIsInN5czp1c2VyOmRlbGV0ZSIsInN5czp1c2VyOmxpc3QiXSwiaXNzIjoieWluZ3h1ZS5vcmcuY24iLCJqd3QtdXNlci1uYW1lLWtleSI6ImFkbWluIiwiZXhwIjoxNjUyMjgwMzExLCJpYXQiOjE2NTIyNzMxMTF9.5BeI_xWTQe87pE9eyxL53nVY-hBMhcJuSLuPtckaRv8
+2022-05-11 20:45:11.360  INFO 71812 --- [http-nio-8080-exec-3] c.y.lesson.service.impl.UserServiceImpl  : refreshToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5YTI2ZjVmMS1jYmQyLTQ3M2QtODJkYi0xZDZkY2Y0NTk4ZjgiLCJpc3MiOiJ5aW5neHVlLm9yZy5jbiIsImp3dC11c2VyLW5hbWUta2V5IjoiYWRtaW4iLCJleHAiOjE2NTIzMDE5MTEsImlhdCI6MTY1MjI3MzExMX0.NSdaYsnkUhT0iT1RbpJ8v8txw9g_1Ku7lLI5VjhJ414
+2022-05-11 20:45:29.934 DEBUG 71812 --- [http-nio-8080-exec-1] c.y.l.m.SysUserMapper.selectByUsername   : ==>  Preparing: select id, username, salt, `password`, phone, dept_id, real_name, nick_name, email, `status`, sex, deleted, create_id, update_id, create_where, create_time, update_time from sys_user where username=? and deleted=1 
+2022-05-11 20:45:29.934 DEBUG 71812 --- [http-nio-8080-exec-1] c.y.l.m.SysUserMapper.selectByUsername   : ==> Parameters: dev123(String)
+2022-05-11 20:45:29.936 DEBUG 71812 --- [http-nio-8080-exec-1] c.y.l.m.SysUserMapper.selectByUsername   : <==      Total: 1
+2022-05-11 20:45:29.936  INFO 71812 --- [http-nio-8080-exec-1] c.y.lesson.service.impl.UserServiceImpl  : accessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5YTI2ZjVmMS1jYmQyLTQ3M2QtODJkYi0xZDZkY2Y0NTk4ZjQiLCJyb2xlcy1pbmZvcy1rZXkiOlsiZGV2Il0sInBlcm1pc3Npb25zLWluZm9zLWtleSI6WyJzeXM6dXNlcjphZGQiXSwiaXNzIjoieWluZ3h1ZS5vcmcuY24iLCJqd3QtdXNlci1uYW1lLWtleSI6ImRldjEyMyIsImV4cCI6MTY1MjI4MDMyOSwiaWF0IjoxNjUyMjczMTI5fQ.xLy-fT50BAoNuGcpCIIvLuJU8Yq_f_loVjlXo3nuu_A
+2022-05-11 20:45:29.937  INFO 71812 --- [http-nio-8080-exec-1] c.y.lesson.service.impl.UserServiceImpl  : refreshToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5YTI2ZjVmMS1jYmQyLTQ3M2QtODJkYi0xZDZkY2Y0NTk4ZjQiLCJpc3MiOiJ5aW5neHVlLm9yZy5jbiIsImp3dC11c2VyLW5hbWUta2V5IjoiZGV2MTIzIiwiZXhwIjoxNjUyMzAxOTI5LCJpYXQiOjE2NTIyNzMxMjl9.sg21nHH3qaMiIs2JK3MVZOKph22ZBgI6Vw_0ZX0xwg8
+2022-05-11 20:45:34.056 DEBUG 71812 --- [http-nio-8080-exec-4] c.y.l.m.SysUserMapper.selectByUsername   : ==>  Preparing: select id, username, salt, `password`, phone, dept_id, real_name, nick_name, email, `status`, sex, deleted, create_id, update_id, create_where, create_time, update_time from sys_user where username=? and deleted=1 
+2022-05-11 20:45:34.057 DEBUG 71812 --- [http-nio-8080-exec-4] c.y.l.m.SysUserMapper.selectByUsername   : ==> Parameters: dev123(String)
+2022-05-11 20:45:34.057 DEBUG 71812 --- [http-nio-8080-exec-4] c.y.l.m.SysUserMapper.selectByUsername   : <==      Total: 1
+2022-05-11 20:45:34.058  INFO 71812 --- [http-nio-8080-exec-4] c.y.lesson.service.impl.UserServiceImpl  : accessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5YTI2ZjVmMS1jYmQyLTQ3M2QtODJkYi0xZDZkY2Y0NTk4ZjQiLCJyb2xlcy1pbmZvcy1rZXkiOlsiZGV2Il0sInBlcm1pc3Npb25zLWluZm9zLWtleSI6WyJzeXM6dXNlcjphZGQiXSwiaXNzIjoieWluZ3h1ZS5vcmcuY24iLCJqd3QtdXNlci1uYW1lLWtleSI6ImRldjEyMyIsImV4cCI6MTY1MjI4MDMzNCwiaWF0IjoxNjUyMjczMTM0fQ.fWOrk1MRjTCOfOm_JXBHXG4iCtkSyC383TPyRRXSIdI
+2022-05-11 20:45:34.058  INFO 71812 --- [http-nio-8080-exec-4] c.y.lesson.service.impl.UserServiceImpl  : refreshToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5YTI2ZjVmMS1jYmQyLTQ3M2QtODJkYi0xZDZkY2Y0NTk4ZjQiLCJpc3MiOiJ5aW5neHVlLm9yZy5jbiIsImp3dC11c2VyLW5hbWUta2V5IjoiZGV2MTIzIiwiZXhwIjoxNjUyMzAxOTM0LCJpYXQiOjE2NTIyNzMxMzR9.JzkOBHLZoL8P_ugkiNzJmiPQYyDYDl3C1ECT2M2kcB8
+2022-05-11 20:45:34.859 DEBUG 71812 --- [http-nio-8080-exec-8] c.y.l.m.SysUserMapper.selectByUsername   : ==>  Preparing: select id, username, salt, `password`, phone, dept_id, real_name, nick_name, email, `status`, sex, deleted, create_id, update_id, create_where, create_time, update_time from sys_user where username=? and deleted=1 
+2022-05-11 20:45:34.860 DEBUG 71812 --- [http-nio-8080-exec-8] c.y.l.m.SysUserMapper.selectByUsername   : ==> Parameters: dev123(String)
+2022-05-11 20:45:34.861 DEBUG 71812 --- [http-nio-8080-exec-8] c.y.l.m.SysUserMapper.selectByUsername   : <==      Total: 1
+2022-05-11 20:45:34.862  INFO 71812 --- [http-nio-8080-exec-8] c.y.lesson.service.impl.UserServiceImpl  : accessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5YTI2ZjVmMS1jYmQyLTQ3M2QtODJkYi0xZDZkY2Y0NTk4ZjQiLCJyb2xlcy1pbmZvcy1rZXkiOlsiZGV2Il0sInBlcm1pc3Npb25zLWluZm9zLWtleSI6WyJzeXM6dXNlcjphZGQiXSwiaXNzIjoieWluZ3h1ZS5vcmcuY24iLCJqd3QtdXNlci1uYW1lLWtleSI6ImRldjEyMyIsImV4cCI6MTY1MjI4MDMzNCwiaWF0IjoxNjUyMjczMTM0fQ.fWOrk1MRjTCOfOm_JXBHXG4iCtkSyC383TPyRRXSIdI
+2022-05-11 20:45:34.862  INFO 71812 --- [http-nio-8080-exec-8] c.y.lesson.service.impl.UserServiceImpl  : refreshToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5YTI2ZjVmMS1jYmQyLTQ3M2QtODJkYi0xZDZkY2Y0NTk4ZjQiLCJpc3MiOiJ5aW5neHVlLm9yZy5jbiIsImp3dC11c2VyLW5hbWUta2V5IjoiZGV2MTIzIiwiZXhwIjoxNjUyMzAxOTM0LCJpYXQiOjE2NTIyNzMxMzR9.JzkOBHLZoL8P_ugkiNzJmiPQYyDYDl3C1ECT2M2kcB8
+2022-05-11 20:45:35.302 DEBUG 71812 --- [http-nio-8080-exec-5] c.y.l.m.SysUserMapper.selectByUsername   : ==>  Preparing: select id, username, salt, `password`, phone, dept_id, real_name, nick_name, email, `status`, sex, deleted, create_id, update_id, create_where, create_time, update_time from sys_user where username=? and deleted=1 
+2022-05-11 20:45:35.303 DEBUG 71812 --- [http-nio-8080-exec-5] c.y.l.m.SysUserMapper.selectByUsername   : ==> Parameters: dev123(String)
+2022-05-11 20:45:35.304 DEBUG 71812 --- [http-nio-8080-exec-5] c.y.l.m.SysUserMapper.selectByUsername   : <==      Total: 1
+2022-05-11 20:45:35.304  INFO 71812 --- [http-nio-8080-exec-5] c.y.lesson.service.impl.UserServiceImpl  : accessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5YTI2ZjVmMS1jYmQyLTQ3M2QtODJkYi0xZDZkY2Y0NTk4ZjQiLCJyb2xlcy1pbmZvcy1rZXkiOlsiZGV2Il0sInBlcm1pc3Npb25zLWluZm9zLWtleSI6WyJzeXM6dXNlcjphZGQiXSwiaXNzIjoieWluZ3h1ZS5vcmcuY24iLCJqd3QtdXNlci1uYW1lLWtleSI6ImRldjEyMyIsImV4cCI6MTY1MjI4MDMzNSwiaWF0IjoxNjUyMjczMTM1fQ.RMiq93DeTekUm_or_nXvfhlWFdbkmELSr09OVECEGp0
+2022-05-11 20:45:35.304  INFO 71812 --- [http-nio-8080-exec-5] c.y.lesson.service.impl.UserServiceImpl  : refreshToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5YTI2ZjVmMS1jYmQyLTQ3M2QtODJkYi0xZDZkY2Y0NTk4ZjQiLCJpc3MiOiJ5aW5neHVlLm9yZy5jbiIsImp3dC11c2VyLW5hbWUta2V5IjoiZGV2MTIzIiwiZXhwIjoxNjUyMzAxOTM1LCJpYXQiOjE2NTIyNzMxMzV9.-mb5eWnlAxJdPab11u9i4jPLKoDbubIX4VC9_o7TdSQ
