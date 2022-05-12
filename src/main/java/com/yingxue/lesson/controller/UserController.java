@@ -1,12 +1,15 @@
 package com.yingxue.lesson.controller;
 
 
+import com.yingxue.lesson.entity.SysUser;
 import com.yingxue.lesson.service.UserService;
 import com.yingxue.lesson.utils.DataResult;
 import com.yingxue.lesson.vo.req.LoginReqVO;
 
+import com.yingxue.lesson.vo.req.UserPageReqVO;
 import com.yingxue.lesson.vo.resp.LoginRespVO;
 
+import com.yingxue.lesson.vo.resp.PageVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -40,5 +43,12 @@ public class UserController {
         return result;
     }
 
+    @PostMapping("/users")
+    @ApiOperation(value = "分页查询用户接口")
+    public DataResult<PageVO<SysUser>> pageInfo(@RequestBody UserPageReqVO vo){
+        DataResult result=DataResult.success();
+        result.setData(userService.pageInfo(vo));
+        return result;
+    }
 
 }

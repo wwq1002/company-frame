@@ -2,6 +2,8 @@ package com.yingxue.lesson.service.impl;
 
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yingxue.lesson.contants.Constant;
 import com.yingxue.lesson.entity.SysUser;
 import com.yingxue.lesson.exception.BusinessException;
@@ -9,9 +11,12 @@ import com.yingxue.lesson.exception.code.BaseResponseCode;
 import com.yingxue.lesson.mapper.SysUserMapper;
 import com.yingxue.lesson.service.UserService;
 import com.yingxue.lesson.utils.JwtTokenUtil;
+import com.yingxue.lesson.utils.PageUtil;
 import com.yingxue.lesson.utils.PasswordUtils;
 import com.yingxue.lesson.vo.req.LoginReqVO;
+import com.yingxue.lesson.vo.req.UserPageReqVO;
 import com.yingxue.lesson.vo.resp.LoginRespVO;
+import com.yingxue.lesson.vo.resp.PageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +72,14 @@ public class UserServiceImpl implements UserService {
         loginRespVO.setAccessToken(accessToken);
         return loginRespVO;
     }
+
+    @Override
+    public PageVO<SysUser> pageInfo(UserPageReqVO vo) {
+        PageHelper.startPage(vo.getPageNum(),vo.getPageSize());
+        List<SysUser> sysUsers = sysUserMapper.selectAll();
+        return PageUtil.getPageVo(sysUsers);
+    }
+
     /**
      * 用过用户id查询拥有的角色信息
      * @Author:      小霍
