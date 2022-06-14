@@ -45,6 +45,7 @@ public class UserController {
 
     @PostMapping("/users")
     @ApiOperation(value = "分页查询用户接口")
+    @RequiresPermissions("sys:user:list")
     public DataResult<PageVO<SysUser>> pageInfo(@RequestBody UserPageReqVO vo){
         DataResult result=DataResult.success();
         result.setData(userService.pageInfo(vo));
