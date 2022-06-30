@@ -1,6 +1,5 @@
 package com.yingxue.lesson.controller;
 
-import com.yingxue.lesson.aop.annotation.MyLog;
 import com.yingxue.lesson.contants.Constant;
 import com.yingxue.lesson.service.HomeService;
 import com.yingxue.lesson.utils.DataResult;
@@ -30,7 +29,6 @@ public class HomeController {
     private HomeService homeService;
     @GetMapping("/home")
     @ApiOperation(value = "获取首页数据接口")
-    @MyLog(title = "首页模块",action = "获取首页数据接口")
     public DataResult<HomeRespVO> getHome(HttpServletRequest request){
         String accessToken=request.getHeader(Constant.ACCESS_TOKEN);
         String userId= JwtTokenUtil.getUserId(accessToken);

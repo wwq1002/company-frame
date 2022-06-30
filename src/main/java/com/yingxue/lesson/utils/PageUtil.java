@@ -14,17 +14,17 @@ import java.util.List;
  */
 public class PageUtil {
     private PageUtil(){}
-    public static <T> PageVO getPageVo(List<T> list){
-        PageVO<T> pageVO=new PageVO<>();
+    public static <T> PageVO<T> getPageVO(List<T> list){
+        PageVO<T> result=new PageVO<>();
         if(list instanceof Page){
-            Page page = (Page)list;
-            pageVO.setTotalRows(page.getTotal());
-            pageVO.setList(page.getResult());
-            pageVO.setTotalPages(page.getPages());
-            pageVO.setCurPageSize(page.size());
-            pageVO.setPageNum(page.getPageNum());
-            pageVO.setPageSize(page.getPageSize());
+            Page<T> page= (Page<T>) list;
+            result.setTotalRows(page.getTotal());
+            result.setTotalPages(page.getPages());
+            result.setPageNum(page.getPageNum());
+            result.setCurPageSize(page.getPageSize());
+            result.setPageSize(page.size());
+            result.setList(page.getResult());
         }
-        return pageVO;
+        return result;
     }
 }

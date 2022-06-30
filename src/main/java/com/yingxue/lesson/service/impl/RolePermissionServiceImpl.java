@@ -28,7 +28,6 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     private SysRolePermissionMapper sysRolePermissionMapper;
     @Override
     public void addRolePermission(RolePermissionOperationReqVO vo) {
-        sysRolePermissionMapper.removeByRoleId(vo.getRoleId());
         if(vo.getPermissionIds()==null||vo.getPermissionIds().isEmpty()){
             return;
         }
@@ -46,31 +45,6 @@ public class RolePermissionServiceImpl implements RolePermissionService {
         if(i==0){
             throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
         }
-    }
-
-    @Override
-    public List<String> getRoleIdsByPermissionId(String permissionId) {
-        return sysRolePermissionMapper.getRoleIdsByPermissionId(permissionId);
-    }
-
-    @Override
-    public int removeRoleByPermissionId(String permissionId) {
-        return sysRolePermissionMapper.removeByPermissionId(permissionId);
-    }
-
-    @Override
-    public List<String> getPermissionIdsByRoleId(String roleId) {
-        return sysRolePermissionMapper.getPermissionIdsByRoleId(roleId);
-    }
-
-    @Override
-    public int removeByRoleId(String roleId) {
-        return sysRolePermissionMapper.removeByRoleId(roleId);
-    }
-    @Override
-    public List<String> getPermissionIdsByRoleIds(List<String> roleIds) {
-
-        return sysRolePermissionMapper.getPermissionIdsByRoleIds(roleIds);
     }
 
 }

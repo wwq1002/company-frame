@@ -185,4 +185,12 @@
       deleted = #{deleted,jdbcType=TINYINT}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <!-- @Description:     查询所有的菜单权限数据-->
+  <!-- @Author:          小霍-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from sys_permission
+    where deleted=1 order by order_num desc
+  </select>
+
 </mapper>

@@ -110,6 +110,6 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(vo.getPageNum(),vo.getPageSize());
         List<SysUser> sysUsers = sysUserMapper.selectAll();
 //        PageInfo<SysUser> pageInfo=new PageInfo<>(sysUsers);
-        return PageUtil.getPageVo(sysUsers);
+        return PageUtil.getPageVO(sysUsers);
     }
 }
