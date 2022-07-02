@@ -6,6 +6,7 @@ import com.yingxue.lesson.entity.SysUser;
 import com.yingxue.lesson.vo.req.LoginReqVO;
 
 
+import com.yingxue.lesson.vo.req.UserAddReqVO;
 import com.yingxue.lesson.vo.req.UserPageReqVO;
 import com.yingxue.lesson.vo.resp.LoginRespVO;
 import com.yingxue.lesson.vo.resp.PageVO;
@@ -20,4 +21,5 @@ public interface UserService {
 
     LoginRespVO login(LoginReqVO vo);
     PageVO<SysUser> pageInfo(UserPageReqVO vo);
+    void addUser(UserAddReqVO vo);
 }

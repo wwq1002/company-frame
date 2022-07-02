@@ -4,9 +4,11 @@ package com.yingxue.lesson.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yingxue.lesson.contants.Constant;
+import com.yingxue.lesson.entity.SysDept;
 import com.yingxue.lesson.entity.SysUser;
 import com.yingxue.lesson.exception.BusinessException;
 import com.yingxue.lesson.exception.code.BaseResponseCode;
+import com.yingxue.lesson.mapper.SysDeptMapper;
 import com.yingxue.lesson.mapper.SysUserMapper;
 import com.yingxue.lesson.service.UserService;
 import com.yingxue.lesson.utils.JwtTokenUtil;
@@ -14,17 +16,16 @@ import com.yingxue.lesson.utils.PageUtil;
 import com.yingxue.lesson.utils.PasswordUtils;
 import com.yingxue.lesson.vo.req.LoginReqVO;
 
+import com.yingxue.lesson.vo.req.UserAddReqVO;
 import com.yingxue.lesson.vo.req.UserPageReqVO;
 import com.yingxue.lesson.vo.resp.LoginRespVO;
 import com.yingxue.lesson.vo.resp.PageVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName: UserServiceImpl
@@ -38,7 +39,8 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Autowired
     private SysUserMapper sysUserMapper;
-
+    @Autowired
+    private SysDeptMapper sysDeptMapper;
     @Override
     public LoginRespVO login(LoginReqVO vo) {
         SysUser sysUser = sysUserMapper.selectByUsername(vo.getUsername());
@@ -108,8 +110,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageVO<SysUser> pageInfo(UserPageReqVO vo) {
         PageHelper.startPage(vo.getPageNum(),vo.getPageSize());
-        List<SysUser> sysUsers = sysUserMapper.selectAll();
-//        PageInfo<SysUser> pageInfo=new PageInfo<>(sysUsers);
-        return PageUtil.getPageVO(sysUsers);
+        List<SysUser> list=sysUserMapper.selectAll(vo);
+        for (SysUser sysUser:list){
+            SysDept sysDept = sysDeptMapper.selectByPrimaryKey(sysUser.getDeptId());
+            if(sysDept!=null){
+                sysUser.setDeptName(sysDept.getName());
+            }
+        }
+        return PageUtil.getPageVO(list);
+    }
+
+    @Override
+    public void addUser(UserAddReqVO vo) {
+        SysUser sysUser=new SysUser();
+        BeanUtils.copyProperties(vo,sysUser);
+        sysUser.setId(UUID.randomUUID().toString());
+        sysUser.setCreateTime(new Date());
+        String salt=PasswordUtils.getSalt();
+        String ecdPwd=PasswordUtils.encode(vo.getPassword(),salt);
+        sysUser.setSalt(salt);
+        sysUser.setPassword(ecdPwd);
+        int i = sysUserMapper.insertSelective(sysUser);
+        if(i!=1){
+            throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
+        }
     }
 }

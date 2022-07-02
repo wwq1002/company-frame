@@ -40,6 +40,8 @@ public class SysUser implements Serializable {
 
     private Date updateTime;
 
+    private String deptName;
+
     private static final long serialVersionUID = 1L;
 
 }

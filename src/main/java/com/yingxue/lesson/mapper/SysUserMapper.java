@@ -20,5 +20,5 @@ public interface SysUserMapper {
 
     SysUser selectByUsername(String username);
 
-    List<SysUser> selectAll();
+    List<SysUser> selectAll(UserPageReqVO vo);
 }

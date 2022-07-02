@@ -1,9 +1,15 @@
 package com.yingxue.lesson.controller;
 
+import com.yingxue.lesson.entity.SysUser;
+import com.yingxue.lesson.utils.DataResult;
+import com.yingxue.lesson.vo.req.UserPageReqVO;
+import com.yingxue.lesson.vo.resp.PageVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -53,5 +59,9 @@ public class IndexController {
     public String depts(){
         return "depts/dept"; }
 
+    @GetMapping("/users")
+    @ApiOperation(value = "跳转部门管理界面")
+    public String users(){
+        return "users/user"; }
 
 }
