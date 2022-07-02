@@ -19,4 +19,6 @@ import java.util.List;
 public interface RoleService {
     PageVO<SysRole> pageInfo(RolePageReqVO vo);
     SysRole addRole(AddRoleReqVO vo);
+    List<SysRole> selectAll();
+
 }

@@ -7,18 +7,17 @@ import com.yingxue.lesson.utils.DataResult;
 import com.yingxue.lesson.vo.req.LoginReqVO;
 
 import com.yingxue.lesson.vo.req.UserAddReqVO;
+import com.yingxue.lesson.vo.req.UserOwnRoleReqVO;
 import com.yingxue.lesson.vo.req.UserPageReqVO;
 import com.yingxue.lesson.vo.resp.LoginRespVO;
 
 import com.yingxue.lesson.vo.resp.PageVO;
+import com.yingxue.lesson.vo.resp.UserOwnRoleRespVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -58,4 +57,21 @@ public class UserController {
         userService.addUser(vo);
         return result;
     }
+    @GetMapping("/user/roles/{userId}")
+    @ApiOperation(value = "查询用户拥有的角色数据接口")
+    public DataResult<UserOwnRoleRespVO> getUserOwnRole(@PathVariable("userId") String userId){
+        DataResult result=DataResult.success();
+        result.setData(userService.getUserOwnRole(userId));
+        return result;
+    }
+
+    @PutMapping("/user/roles")
+    @ApiOperation(value = "保存用户拥有的角色信息接口")
+    public DataResult saveUserOwnRole(@RequestBody @Valid UserOwnRoleReqVO vo){
+        DataResult result=DataResult.success();
+        userService.setUserOwnRole(vo);
+        return result;
+    }
+
+
 }

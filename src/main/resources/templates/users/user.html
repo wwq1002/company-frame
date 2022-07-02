@@ -97,7 +97,7 @@
     </div>
 </script>
 <script type="text/html" id="tool">
-
+    <a class="layui-btn  layui-btn-xs" lay-event="operationRole" >赋予角色</a>
 </script>
 <script src="/layui/layui.js"></script>
 <script src="/js/core.util.js"></script>
@@ -352,9 +352,6 @@
             }
             return false;
         });
-
-        //日期范围
-
         //日期范围
         laydate.render({
             elem: '#createTime'
@@ -369,10 +366,8 @@
                     searchParam.startTime=null;
                     searchParam.endTime=null;
                 }
-
             }
         });
-
         //执行查询
         $("#search").click(function () {
             searchParam.userId=$("#userId").val();
@@ -389,13 +384,72 @@
                 }
             },"POST",false);
         });
-
-        //执行查询
-
         //操作工具栏事件
+        table.on('tool(user_table)',function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case 'operationRole':
+                    CoreUtil.sendAjax("/api/user/roles/"+data.id,null,function (res) {
+                        initTransfer(res.data);
+                        layer.open({
+                            type: 1,
+                            offset: '50px',
+                            skin: 'layui-layer-molv',
+                            title: "赋予角色",
+                            area: ['500px', '400px'],
+                            shade: 0,
+                            shadeClose: false,
+                            content: $("#roles"),
+                            btn: ['确定', '取消'],
+                            yes: function (index) {
+                                //获得右侧数据
+                                var roleIds = [];
+                                var getData = transfer.getData('ownData');
+                                // layer.msg(JSON.stringify(getData));
+                                if(getData.length!=0){
+                                    $(getData).each(function (index,item) {
+                                        roleIds.push(item.value);
+                                    });
+                                }
+                                var param={
+                                    userId:data.id,
+                                    roleIds:roleIds
+                                }
+                                CoreUtil.sendAjax("/api/user/roles",JSON.stringify(param),function (res) {
+                                    layer.msg(res.msg);
+                                    $(".layui-laypage-btn").click();
+                                },"PUT",false,function (res) {
+                                    //赋予用户角色无权限提示
+                                    layer.msg("抱歉！您暂无赋予用户角色的权限");
+                                });
+                                layer.close(index);
+                            }
+                        });
+                    },"GET",false,function (res) {
+                        layer.msg("抱歉！您暂无查询用户所拥有角色列表的权限");
+                    });
+                    break;
+            }
+        });
+        //初始化 赋予角色控件
+        var initTransfer=function (data) {
+            //显示搜索框
+            transfer.render({
+                elem: '#roles'
+                ,data: data.allRole
+                ,title: ['赋予角色', '拥有角色']
+                ,showSearch: true
+                ,value:data.ownRoles
+                ,id: 'ownData'
+                ,parseData: function(res){
+                    return {
+                        "value": res.id //数据值
+                        ,"title": res.name //数据标题
+                    }
+                }
+            })
+        };
 
-
-        //删除前确认对话框
 
     });
 

@@ -66,5 +66,10 @@ public class RoleServiceImpl implements RoleService {
         return sysRole;
     }
 
+    @Override
+    public List<SysRole> selectAll() {
+        return  sysRoleMapper.selectAll( new RolePageReqVO());
+    }
+
 
 }

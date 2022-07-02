@@ -5,27 +5,37 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yingxue.lesson.contants.Constant;
 import com.yingxue.lesson.entity.SysDept;
+import com.yingxue.lesson.entity.SysRole;
 import com.yingxue.lesson.entity.SysUser;
 import com.yingxue.lesson.exception.BusinessException;
 import com.yingxue.lesson.exception.code.BaseResponseCode;
 import com.yingxue.lesson.mapper.SysDeptMapper;
+import com.yingxue.lesson.mapper.SysRoleMapper;
 import com.yingxue.lesson.mapper.SysUserMapper;
+import com.yingxue.lesson.mapper.SysUserRoleMapper;
+import com.yingxue.lesson.service.RedisService;
+import com.yingxue.lesson.service.RoleService;
+import com.yingxue.lesson.service.UserRoleService;
 import com.yingxue.lesson.service.UserService;
 import com.yingxue.lesson.utils.JwtTokenUtil;
 import com.yingxue.lesson.utils.PageUtil;
 import com.yingxue.lesson.utils.PasswordUtils;
+import com.yingxue.lesson.utils.TokenSetting;
 import com.yingxue.lesson.vo.req.LoginReqVO;
 
 import com.yingxue.lesson.vo.req.UserAddReqVO;
+import com.yingxue.lesson.vo.req.UserOwnRoleReqVO;
 import com.yingxue.lesson.vo.req.UserPageReqVO;
 import com.yingxue.lesson.vo.resp.LoginRespVO;
 import com.yingxue.lesson.vo.resp.PageVO;
+import com.yingxue.lesson.vo.resp.UserOwnRoleRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName: UserServiceImpl
@@ -41,6 +51,17 @@ public class UserServiceImpl implements UserService {
     private SysUserMapper sysUserMapper;
     @Autowired
     private SysDeptMapper sysDeptMapper;
+    @Autowired
+    private RedisService redisService;
+
+    @Autowired
+    private UserRoleService userRoleService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private TokenSetting tokenSettings;
+
+
     @Override
     public LoginRespVO login(LoginReqVO vo) {
         SysUser sysUser = sysUserMapper.selectByUsername(vo.getUsername());
@@ -134,5 +155,26 @@ public class UserServiceImpl implements UserService {
         if(i!=1){
             throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
         }
+    }
+
+    @Override
+    public UserOwnRoleRespVO getUserOwnRole(String userId) {
+        List<String> roleIdsByUserId = userRoleService.getRoleIdsByUserId(userId);
+        List<SysRole> list = roleService.selectAll();
+        UserOwnRoleRespVO vo=new UserOwnRoleRespVO();
+        vo.setAllRole(list);
+        vo.setOwnRoles(roleIdsByUserId);
+        return vo;
+    }
+    @Override
+    public void setUserOwnRole(UserOwnRoleReqVO vo) {
+        userRoleService.addUserRoleInfo(vo);
+        /**
+         * 标记用户 要主动去刷新
+         */
+        redisService.set(Constant.JWT_REFRESH_KEY+vo.getUserId(),vo.getUserId(),tokenSettings.getAccessTokenExpireTime().toMillis(), TimeUnit.MILLISECONDS);
+        /**
+         * 清楚用户授权数据缓存
+         */
     }
 }
