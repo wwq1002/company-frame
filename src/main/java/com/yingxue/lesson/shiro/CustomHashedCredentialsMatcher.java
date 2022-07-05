@@ -11,6 +11,8 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @ClassName: CustomHashedCredentialsMatcher
  * TODO:类文件简单描述
@@ -39,6 +41,17 @@ public class CustomHashedCredentialsMatcher extends HashedCredentialsMatcher {
         //校验token
         if(!JwtTokenUtil.validateToken(accessToken)){
             throw new BusinessException(BaseResponseCode.TOKEN_PAST_DUE);
+        }
+        /**
+         * 判断用户是否被标记了
+         */
+        if(redisService.hasKey(Constant.JWT_REFRESH_KEY+userId)){
+            /**
+             * 判断用户是否已经刷新过
+             */
+            if(redisService.getExpire(Constant.JWT_REFRESH_KEY+userId, TimeUnit.MILLISECONDS)>JwtTokenUtil.getRemainingTime(accessToken)){
+                throw new BusinessException(BaseResponseCode.TOKEN_PAST_DUE);
+            }
         }
         return true;
     }

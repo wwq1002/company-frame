@@ -2,6 +2,7 @@ package com.yingxue.lesson.mapper;
 
 import com.yingxue.lesson.entity.SysUser;
 import com.yingxue.lesson.vo.req.UserPageReqVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface SysUserMapper {
     SysUser selectByUsername(String username);
 
     List<SysUser> selectAll(UserPageReqVO vo);
+
+    int deletedUsers(@Param("sysUser") SysUser sysUser, @Param("list") List<String> list);
 }

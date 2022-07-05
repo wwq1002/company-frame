@@ -2,19 +2,26 @@ package com.yingxue.lesson.service.impl;
 
 
 
+import com.yingxue.lesson.contants.Constant;
 import com.yingxue.lesson.entity.SysPermission;
 
 import com.yingxue.lesson.exception.BusinessException;
 import com.yingxue.lesson.exception.code.BaseResponseCode;
 import com.yingxue.lesson.mapper.SysPermissionMapper;
 import com.yingxue.lesson.service.PermissionService;
+import com.yingxue.lesson.service.RedisService;
+import com.yingxue.lesson.service.RolePermissionService;
+import com.yingxue.lesson.service.UserRoleService;
+import com.yingxue.lesson.utils.TokenSetting;
 import com.yingxue.lesson.vo.req.PermissionAddReqVO;
+import com.yingxue.lesson.vo.req.PermissionUpdateReqVO;
 import com.yingxue.lesson.vo.resp.PermissionRespNodeVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
+import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -26,11 +33,18 @@ import java.util.concurrent.TimeUnit;
  * @Version: 0.0.1
  */
 @Service
+@Slf4j
 public class PermissionServiceImpl implements PermissionService {
     @Autowired
     private SysPermissionMapper sysPermissionMapper;
-
-
+    @Autowired
+    private RolePermissionService rolePermissionService;
+    @Autowired
+    private UserRoleService userRoleService;
+    @Autowired
+    private RedisService redisService;
+    @Autowired
+    private TokenSetting tokenSettings;
     @Override
     public List<SysPermission> selectAll() {
         List<SysPermission> sysPermissions = sysPermissionMapper.selectAll();
@@ -213,6 +227,89 @@ public class PermissionServiceImpl implements PermissionService {
     public List<PermissionRespNodeVO> selectAllTree() {
         return getTree(selectAll(),false);
     }
+
+
+    @Override
+    public void updatePermission(PermissionUpdateReqVO vo) {
+        //校验数据
+        SysPermission update=new SysPermission();
+        BeanUtils.copyProperties(vo,update);
+        verifyForm(update);
+        SysPermission sysPermission = sysPermissionMapper.selectByPrimaryKey(vo.getId());
+        if(sysPermission==null){
+            log.info("传入的id在数据库中不存在");
+            throw new BusinessException(BaseResponseCode.DATA_ERROR);
+        }
+        if(!sysPermission.getPid().equals(vo.getPid())||sysPermission.getStatus()!=vo.getStatus()){
+            //所属菜单发生了变化或者权限状态发生了变化要校验该权限是否存在子集
+            List<SysPermission> sysPermissions = sysPermissionMapper.selectChild(vo.getId());
+            if(!sysPermissions.isEmpty()){
+                throw new BusinessException(BaseResponseCode.OPERATION_MENU_PERMISSION_UPDATE);
+            }
+        }
+
+        update.setUpdateTime(new Date());
+        int i = sysPermissionMapper.updateByPrimaryKeySelective(update);
+        if(i!=1){
+            throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
+        }
+
+        //判断授权标识符是否发生了变化(权限标识符发生了变化，或者权限状态发生了变化)
+        if(!sysPermission.getPerms().equals(vo.getPerms())||sysPermission.getStatus()!=vo.getStatus()){
+            List<String> roleIdsByPermissionId = rolePermissionService.getRoleIdsByPermissionId(vo.getId());
+            if(!roleIdsByPermissionId.isEmpty()){
+                List<String> userIdsByRoleIds = userRoleService.getUserIdsByRoleIds(roleIdsByPermissionId);
+                if(!userIdsByRoleIds.isEmpty()){
+                    for (String userId:
+                            userIdsByRoleIds) {
+                        redisService.set(Constant.JWT_REFRESH_KEY+userId,userId,tokenSettings.getAccessTokenExpireTime().toMillis(), TimeUnit.MILLISECONDS);
+                        /**
+                         * 清楚用户授权数据缓存
+                         */
+                        redisService.delete(Constant.IDENTIFY_CACHE_KEY+userId);
+                    }
+                }
+            }
+
+        }
+    }
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deletedPermission(String permissionId) {
+        //判断是否有子集关联
+        List<SysPermission> sysPermissions = sysPermissionMapper.selectChild(permissionId);
+        if(!sysPermissions.isEmpty()){
+            throw new BusinessException(BaseResponseCode.ROLE_PERMISSION_RELATION);
+        }
+
+        //更新权限数据
+        SysPermission sysPermission=new SysPermission();
+        sysPermission.setUpdateTime(new Date());
+        sysPermission.setDeleted(0);
+        sysPermission.setId(permissionId);
+        int i = sysPermissionMapper.updateByPrimaryKeySelective(sysPermission);
+        if(i!=1){
+            throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
+        }
+        //判断授权标识符是否发生了变化
+        List<String> roleIdsByPermissionId = rolePermissionService.getRoleIdsByPermissionId(permissionId);
+        //解除相关角色和该菜单权限的关联
+        rolePermissionService.removeRoleByPermissionId(permissionId);
+        if(!roleIdsByPermissionId.isEmpty()){
+            List<String> userIdsByRoleIds = userRoleService.getUserIdsByRoleIds(roleIdsByPermissionId);
+            if(!userIdsByRoleIds.isEmpty()){
+                for (String userId:
+                        userIdsByRoleIds) {
+                    redisService.set(Constant.JWT_REFRESH_KEY+userId,userId,tokenSettings.getAccessTokenExpireTime().toMillis(), TimeUnit.MILLISECONDS);
+                    /**
+                     * 清楚用户授权数据缓存
+                     */
+                    redisService.delete(Constant.IDENTIFY_CACHE_KEY+userId);
+                }
+            }
+        }
+    }
+
 
 
 }

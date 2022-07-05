@@ -25,6 +25,11 @@ public class Constant {
     public static final String PERMISSIONS_INFOS_KEY="permissions-infos-key";
 
     /**
+     * refresh_token 主动退出后加入黑名单 key
+     */
+    public static final String JWT_REFRESH_TOKEN_BLACKLIST="jwt-refresh-token-blacklist_";
+
+    /**
      *  业务访问token
      */
     public static final String ACCESS_TOKEN="authorization";

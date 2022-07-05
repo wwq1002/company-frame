@@ -96,4 +96,21 @@
       )
     </foreach>
   </insert>
+
+  <!-- @Description:     通过权限查找关联的角色id集合-->
+  <!-- @Author:          小霍-->
+  <select id="getRoleIdsByPermissionId" resultType="java.lang.String">
+    select role_id
+    from sys_role_permission
+    where permission_id=#{permissionId}
+  </select>
+
+  <!-- @Description:     通过权限id删除关联的角色-->
+  <!-- @Author:          小霍-->
+  <delete id="removeByPermissionId">
+    delete
+    from sys_role_permission
+    where permission_id=#{permissionId}
+  </delete>
+
 </mapper>

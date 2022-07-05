@@ -18,4 +18,10 @@ public interface SysRolePermissionMapper {
     int updateByPrimaryKey(SysRolePermission record);
 
     int batchInsertRolePermission(List<SysRolePermission> list);
+
+    List<String> getRoleIdsByPermissionId(String permissionId);
+
+    //根据permissionId 删除角色和菜单权限关联表相关数据
+    int removeByPermissionId(String permissionId);
+
 }

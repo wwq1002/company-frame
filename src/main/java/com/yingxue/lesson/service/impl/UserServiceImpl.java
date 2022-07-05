@@ -21,11 +21,8 @@ import com.yingxue.lesson.utils.JwtTokenUtil;
 import com.yingxue.lesson.utils.PageUtil;
 import com.yingxue.lesson.utils.PasswordUtils;
 import com.yingxue.lesson.utils.TokenSetting;
-import com.yingxue.lesson.vo.req.LoginReqVO;
+import com.yingxue.lesson.vo.req.*;
 
-import com.yingxue.lesson.vo.req.UserAddReqVO;
-import com.yingxue.lesson.vo.req.UserOwnRoleReqVO;
-import com.yingxue.lesson.vo.req.UserPageReqVO;
 import com.yingxue.lesson.vo.resp.LoginRespVO;
 import com.yingxue.lesson.vo.resp.PageVO;
 import com.yingxue.lesson.vo.resp.UserOwnRoleRespVO;
@@ -33,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -176,5 +174,71 @@ public class UserServiceImpl implements UserService {
         /**
          * 清楚用户授权数据缓存
          */
+    }
+    @Override
+    public String refreshToken(String refreshToken) {
+        //它是否过期
+        //它是否被加如了黑名
+        if(!JwtTokenUtil.validateToken(refreshToken)||redisService.hasKey(Constant.JWT_REFRESH_TOKEN_BLACKLIST+refreshToken)){
+            throw new BusinessException(BaseResponseCode.TOKEN_ERROR);
+        }
+        String userId=JwtTokenUtil.getUserId(refreshToken);
+        String username=JwtTokenUtil.getUserName(refreshToken);
+        log.info("userId={}",userId);
+        Map<String,Object> claims=new HashMap<>();
+        claims.put(Constant.ROLES_INFOS_KEY,getRoleByUserId(userId));
+        claims.put(Constant.PERMISSIONS_INFOS_KEY,getPermissionByUserId(userId));
+        claims.put(Constant.JWT_USER_NAME,username);
+        String newAccessToken= JwtTokenUtil.getAccessToken(userId,claims);
+        return newAccessToken;
+    }
+
+    @Override
+    public void updateUserInfo(UserUpdateReqVO vo, String operationId) {
+        SysUser sysUser=new SysUser();
+        BeanUtils.copyProperties(vo,sysUser);
+        sysUser.setUpdateTime(new Date());
+        sysUser.setUpdateId(operationId);
+        if(StringUtils.isEmpty(vo.getPassword())){
+            sysUser.setPassword(null);
+        }else {
+            String salt=PasswordUtils.getSalt();
+            String endPwd=PasswordUtils.encode(vo.getPassword(),salt);
+            sysUser.setSalt(salt);
+            sysUser.setPassword(endPwd);
+        }
+
+        int i = sysUserMapper.updateByPrimaryKeySelective(sysUser);
+        if(i!=1){
+            throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
+        }
+        /**
+         * 说明用户状态有改变
+         * 加入变成禁用，之前签发的token都要失效
+         */
+        if(vo.getStatus()==2){
+            redisService.set(Constant.ACCOUNT_LOCK_KEY+vo.getId(),vo.getId());
+        }else {
+            redisService.delete(Constant.ACCOUNT_LOCK_KEY+vo.getId());
+        }
+    }
+
+    @Override
+    public void deletedUsers(List<String> list, String operationId) {
+        SysUser sysUser=new SysUser();
+        sysUser.setUpdateId(operationId);
+        sysUser.setUpdateTime(new Date());
+        int i = sysUserMapper.deletedUsers(sysUser, list);
+        if(i==0){
+            throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
+        }
+        for (String userId:
+                list) {
+            redisService.set(Constant.DELETED_USER_KEY+userId,userId,tokenSettings.getRefreshTokenExpireAppTime().toMillis(),TimeUnit.MILLISECONDS);
+            /**
+             * 清楚用户授权数据缓存
+             */
+            redisService.delete(Constant.IDENTIFY_CACHE_KEY+userId);
+        }
     }
 }

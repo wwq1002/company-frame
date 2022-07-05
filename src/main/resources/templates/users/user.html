@@ -95,9 +95,16 @@
             <i class="layui-icon">&#xe608;</i> 新增用户
         </button>
     </div>
+    <div class="layui-btn-group">
+        <button type="button" class="layui-btn" lay-event="batchDeleted" >
+            <i class="layui-icon">&#xe608;</i> 批量删除
+        </button>
+    </div>
 </script>
 <script type="text/html" id="tool">
     <a class="layui-btn  layui-btn-xs" lay-event="operationRole" >赋予角色</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit" >编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
 </script>
 <script src="/layui/layui.js"></script>
 <script src="/js/core.util.js"></script>
@@ -349,6 +356,17 @@
                     //新增用户无权限提示
                     layer.msg("抱歉！您暂无新增用户的权限");
                 });
+            }else {
+                CoreUtil.sendAjax("/api/user",JSON.stringify(data.field),function (res) {
+                    //显示表格
+                    $(".user_table_div").show();
+                    //隐藏编辑窗口
+                    $(".operation_user").hide();
+                    $(".layui-laypage-btn").click();
+                },"PUT",false,function (res) {
+                    //更新用户无权限提示
+                    layer.msg("抱歉！您暂无编辑用户的权限");
+                });
             }
             return false;
         });
@@ -429,6 +447,38 @@
                         layer.msg("抱歉！您暂无查询用户所拥有角色列表的权限");
                     });
                     break;
+                case 'edit':
+                    $(".user_table_div").hide();
+                    $(".operation_user").show();
+                    $(".title").html("编辑用户");
+                    $(".operation_user input[name=id]").val(data.id);
+                    $(".operation_user input[name=deptId]").val(data.deptId);
+                    $(".operation_user input[name=username]").val(data.username);
+                    $(".operation_user input[name=password]").val("");
+                    $(".operation_user input[name=phone]").val(data.phone);
+                    $(".operation_user input[name=deptName]").val(data.deptName);
+                    if(data.status ==1){
+                        $(".operation_user input[name=status]").attr('checked', 'checked');
+                        $(".operation_user input[name=status]").attr('type', 'hidden').val(1);
+                        var x = document.getElementsByClassName("layui-unselect layui-form-switch");
+                        x[0].setAttribute("class", "layui-unselect layui-form-switch layui-form-onswitch");
+                        var d = document.getElementsByTagName('em')[0];
+                        d.firstChild.nodeValue = '启用';
+                    }else {
+                        $(".operation_user input[name=status]").attr('type', 'hidden').removeAttr("checked").val(2);
+                        var x = document.getElementsByClassName("layui-unselect layui-form-switch");
+                        x[0].setAttribute("class", "layui-unselect layui-form-switch");
+                        var d = document.getElementsByTagName('em')[0];
+                        d.firstChild.nodeValue = '禁用';
+                    }
+                    form.render(); //更新全部
+                    initTree();
+                    break;
+                case 'del':
+                    var userIds=[];
+                    userIds.push(data.id);
+                    tipDialog(userIds,data.username);
+                    break;
             }
         });
         //初始化 赋予角色控件
@@ -448,6 +498,22 @@
                     }
                 }
             })
+        };
+        //删除前确认对话框
+        var tipDialog=function (userIds,username) {
+            layer.open({
+                content: '确定要删除'+username+"用户么?",
+                yes: function(index, layero){
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    CoreUtil.sendAjax("/api/user",JSON.stringify(userIds),function (res) {
+                        layer.msg(res.msg);
+                        $(".layui-laypage-btn").click();
+                    },"DELETE",false,function (res) {
+                        //删除用户无权限
+                        layer.msg("抱歉！您暂无删除用户的权限");
+                    });
+                }
+            });
         };
 
 

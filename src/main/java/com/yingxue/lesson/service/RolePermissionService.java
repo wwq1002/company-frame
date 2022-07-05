@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface RolePermissionService {
     void addRolePermission(RolePermissionOperationReqVO vo);
+    List<String> getRoleIdsByPermissionId(String permissionId);
+    int removeRoleByPermissionId(String permissionId);
 }

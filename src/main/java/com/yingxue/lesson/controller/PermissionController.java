@@ -5,6 +5,7 @@ import com.yingxue.lesson.service.PermissionService;
 import com.yingxue.lesson.utils.DataResult;
 
 import com.yingxue.lesson.vo.req.PermissionAddReqVO;
+import com.yingxue.lesson.vo.req.PermissionUpdateReqVO;
 import com.yingxue.lesson.vo.resp.PermissionRespNodeVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -58,6 +59,21 @@ public class PermissionController {
     public DataResult<List<PermissionRespNodeVO>> getAllPermissionTree(){
         DataResult result=DataResult.success();
         result.setData(permissionService.selectAllTree());
+        return result;
+    }
+
+    @PutMapping("/permission")
+    @ApiOperation(value = "编辑菜单权限接口")
+    public DataResult updatePermission(@RequestBody @Valid PermissionUpdateReqVO vo){
+        permissionService.updatePermission(vo);
+        DataResult result=DataResult.success();
+        return result;
+    }
+    @DeleteMapping("/permission/{permissionId}")
+    @ApiOperation(value = "删除菜单权限接口")
+    public DataResult deletedPermission(@PathVariable("permissionId") String permissionId){
+        DataResult result=DataResult.success();
+        permissionService.deletedPermission(permissionId);
         return result;
     }
 

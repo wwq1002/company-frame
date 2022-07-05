@@ -1,25 +1,27 @@
 package com.yingxue.lesson.controller;
 
 
+import com.yingxue.lesson.contants.Constant;
 import com.yingxue.lesson.entity.SysUser;
 import com.yingxue.lesson.service.UserService;
 import com.yingxue.lesson.utils.DataResult;
-import com.yingxue.lesson.vo.req.LoginReqVO;
+import com.yingxue.lesson.utils.JwtTokenUtil;
+import com.yingxue.lesson.vo.req.*;
 
-import com.yingxue.lesson.vo.req.UserAddReqVO;
-import com.yingxue.lesson.vo.req.UserOwnRoleReqVO;
-import com.yingxue.lesson.vo.req.UserPageReqVO;
 import com.yingxue.lesson.vo.resp.LoginRespVO;
 
 import com.yingxue.lesson.vo.resp.PageVO;
 import com.yingxue.lesson.vo.resp.UserOwnRoleRespVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @ClassName: UserController
@@ -73,5 +75,22 @@ public class UserController {
         return result;
     }
 
-
+    @PutMapping("/user")
+    @ApiOperation(value ="列表修改用户信息接口")
+    public DataResult updateUserInfo(@RequestBody @Valid UserUpdateReqVO vo, HttpServletRequest request){
+        String accessToken=request.getHeader(Constant.ACCESS_TOKEN);
+        String userId= JwtTokenUtil.getUserId(accessToken);
+        DataResult result=DataResult.success();
+        userService.updateUserInfo(vo,userId);
+        return result;
+    }
+    @DeleteMapping("/user")
+    @ApiOperation(value = "批量/删除用户接口")
+    public DataResult deletedUsers(@RequestBody @ApiParam(value = "用户id集合") List<String> list, HttpServletRequest request){
+        String accessToken=request.getHeader(Constant.ACCESS_TOKEN);
+        String operationId=JwtTokenUtil.getUserId(accessToken);
+        userService.deletedUsers(list,operationId);
+        DataResult result=DataResult.success();
+        return result;
+    }
 }
