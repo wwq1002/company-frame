@@ -113,4 +113,29 @@
     where permission_id=#{permissionId}
   </delete>
 
+  <!-- @Description:     根据角色获取它管理的菜单权限-->
+  <!-- @Author:          小霍-->
+  <select id="getPermissionIdsByRoleId" resultType="java.lang.String">
+    SELECT permission_id
+    from sys_role_permission
+    where role_id =#{roleId}
+  </select>
+  <!-- @Description:     通过角色id删除关联数据-->
+  <!-- @Author:          小霍-->
+  <delete id="removeByRoleId">
+    delete
+    from sys_role_permission
+    where role_id=#{roleId}
+  </delete>
+  <!-- @Description:     通过用id集合查找到关联的权限id集合-->
+  <!-- @Author:          小霍-->
+  <select id="getPermissionIdsByRoleIds" resultType="java.lang.String">
+    select permission_id
+    from sys_role_permission
+    where role_id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
 </mapper>

@@ -125,4 +125,20 @@
     </foreach>
   </select>
 
+  <!-- @Description:     通过id查找关联用户id集合-->
+  <!-- @Author:          小霍-->
+  <select id="getUserIdsByRoleId" resultType="java.lang.String">
+    select user_id
+    from sys_user_role
+    where role_id=#{roleId}
+  </select>
+
+  <!-- @Description:     根据角色删除用户关联数据-->
+  <!-- @Author:          小霍-->
+  <delete id="removeUserRoleId">
+    delete
+    from sys_user_role
+    where role_id=#{roleId}
+  </delete>
+
 </mapper>

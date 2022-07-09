@@ -282,5 +282,17 @@
       #{item}
     </foreach>
   </update>
+  <!-- @Description:     查询组织下所有用户-->
+  <!-- @Author:          小霍-->
+  <select id="selectUserInfoByDeptIds" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from sys_user
+    where dept_id in
+    <foreach collection="list" open="(" close=")" separator="," item="item">
+      #{item}
+    </foreach>
+    and deleted=1
+  </select>
+
 
 </mapper>

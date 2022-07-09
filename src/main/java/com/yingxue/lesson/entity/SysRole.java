@@ -1,9 +1,12 @@
 package com.yingxue.lesson.entity;
 
+import com.yingxue.lesson.vo.resp.PermissionRespNodeVO;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 @Data
 public class SysRole implements Serializable {
     private String id;
@@ -20,5 +23,5 @@ public class SysRole implements Serializable {
 
     private Integer deleted;
 
-    private static final long serialVersionUID = 1L;
+    private List<PermissionRespNodeVO> permissionRespNode;
 }

@@ -27,6 +27,8 @@ import com.yingxue.lesson.vo.resp.LoginRespVO;
 import com.yingxue.lesson.vo.resp.PageVO;
 import com.yingxue.lesson.vo.resp.UserOwnRoleRespVO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -240,5 +242,81 @@ public class UserServiceImpl implements UserService {
              */
             redisService.delete(Constant.IDENTIFY_CACHE_KEY+userId);
         }
+    }
+    @Override
+    public List<SysUser> selectUserInfoByDeptIds(List<String> deptIds) {
+        return sysUserMapper.selectUserInfoByDeptIds(deptIds);
+    }
+
+    @Override
+    public void logout(String accessToken, String refreshToken) {
+        if(StringUtils.isEmpty(accessToken)||StringUtils.isEmpty(refreshToken)){
+            throw new BusinessException(BaseResponseCode.DATA_ERROR);
+        }
+        Subject subject = SecurityUtils.getSubject();
+        if(subject!=null){
+            subject.logout();
+        }
+        String userId=JwtTokenUtil.getUserId(accessToken);
+        /**
+         * 把accessToken 加入黑名单
+         */
+        redisService.set(Constant.JWT_ACCESS_TOKEN_BLACKLIST+accessToken,userId,JwtTokenUtil.getRemainingTime(accessToken),TimeUnit.MILLISECONDS);
+
+        /**
+         * 把refreshToken 加入黑名单
+         */
+        redisService.set(Constant.JWT_REFRESH_TOKEN_BLACKLIST+refreshToken,userId,JwtTokenUtil.getRemainingTime(refreshToken),TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    public void userUpdateDetailInfo(UserUpdateDetailInfoReqVO vo, String userId) {
+        SysUser sysUser=new SysUser();
+        BeanUtils.copyProperties(vo,sysUser);
+        sysUser.setId(userId);
+        sysUser.setUpdateTime(new Date());
+        sysUser.setUpdateId(userId);
+        int i = sysUserMapper.updateByPrimaryKeySelective(sysUser);
+        if(i!=1){
+            throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
+        }
+    }
+    @Override
+    public SysUser detailInfo(String userId) {
+        return sysUserMapper.selectByPrimaryKey(userId);
+    }
+
+    @Override
+    public void userUpdatePwd(UserUpdatePwdReqVO vo, String accessToken, String refreshToken) {
+        String userId=JwtTokenUtil.getUserId(accessToken);
+        //校验旧密码
+        SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
+        if(sysUser==null){
+            throw new BusinessException(BaseResponseCode.TOKEN_ERROR);
+        }
+        if(!PasswordUtils.matches(sysUser.getSalt(),vo.getOldPwd(),sysUser.getPassword())){
+            throw new BusinessException(BaseResponseCode.OLD_PASSWORD_ERROR);
+        }
+        //保存新密码
+        sysUser.setUpdateTime(new Date());
+        sysUser.setUpdateId(userId);
+        sysUser.setPassword(PasswordUtils.encode(vo.getNewPwd(),sysUser.getSalt()));
+        int i = sysUserMapper.updateByPrimaryKeySelective(sysUser);
+        if(i!=1){
+            throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
+        }
+
+        /**
+         * 把token 加入黑名单 禁止再访问我们的系统资源
+         */
+        redisService.set(Constant.JWT_ACCESS_TOKEN_BLACKLIST+accessToken,userId,JwtTokenUtil.getRemainingTime(accessToken), TimeUnit.MILLISECONDS);
+        /**
+         * 把 refreshToken 加入黑名单 禁止再拿来刷新token
+         */
+        redisService.set(Constant.JWT_REFRESH_TOKEN_BLACKLIST+refreshToken,userId,JwtTokenUtil.getRemainingTime(refreshToken),TimeUnit.MILLISECONDS);
+        /**
+         * 清楚用户授权数据缓存
+         */
+        redisService.delete(Constant.IDENTIFY_CACHE_KEY+userId);
     }
 }

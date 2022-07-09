@@ -4,19 +4,23 @@ package com.yingxue.lesson.service.impl;
 import com.yingxue.lesson.contants.Constant;
 import com.yingxue.lesson.entity.SysDept;
 
+import com.yingxue.lesson.entity.SysUser;
 import com.yingxue.lesson.exception.BusinessException;
 import com.yingxue.lesson.exception.code.BaseResponseCode;
 import com.yingxue.lesson.mapper.SysDeptMapper;
 import com.yingxue.lesson.service.DeptService;
 
 import com.yingxue.lesson.service.RedisService;
+import com.yingxue.lesson.service.UserService;
 import com.yingxue.lesson.utils.CodeUtil;
 import com.yingxue.lesson.vo.req.DeptAddReqVO;
+import com.yingxue.lesson.vo.req.DeptUpdateReqVO;
 import com.yingxue.lesson.vo.resp.DeptRespNodeVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 
@@ -42,6 +46,8 @@ public class DeptServiceImpl implements DeptService {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private UserService userService;
     @Override
     public List<SysDept> selectAll() {
         List<SysDept> list=sysDeptMapper.selectAll();
@@ -133,6 +139,72 @@ public class DeptServiceImpl implements DeptService {
         return list;
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateDept(DeptUpdateReqVO vo) {
+        //保存更新的部门数据
+        SysDept sysDept=sysDeptMapper.selectByPrimaryKey(vo.getId());
+        if(null==sysDept){
+            log.error("传入 的 id:{}不合法",vo.getId());
+            throw new BusinessException(BaseResponseCode.DATA_ERROR);
+        }
+        SysDept update=new SysDept();
+        BeanUtils.copyProperties(vo,update);
+        update.setUpdateTime(new Date());
+        int count=sysDeptMapper.updateByPrimaryKeySelective(update);
+        if(count!=1){
+            throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
+        }
+
+        //就是维护层级关系
+        if(!vo.getPid().equals(sysDept.getPid())){
+            //子集的部门层级关系编码=父级部门层级关系编码+它本身部门编码
+            SysDept newParent=sysDeptMapper.selectByPrimaryKey(vo.getPid());
+            if(!vo.getPid().equals("0")&&null==newParent){
+                log.info("修改后的部门在数据库查找不到{}",vo.getPid());
+                throw new BusinessException(BaseResponseCode.DATA_ERROR);
+            }
+            SysDept oldParent=sysDeptMapper.selectByPrimaryKey(sysDept.getPid());
+            String oleRelation;
+            String newRelation;
+            /**
+             * 根目录挂靠到其它目录
+             */
+            if(sysDept.getPid().equals("0")){
+                oleRelation=sysDept.getRelationCode();
+                newRelation=newParent.getRelationCode()+sysDept.getDeptNo();
+            }else if(vo.getPid().equals("0")){
+                oleRelation=sysDept.getRelationCode();
+                newRelation=sysDept.getDeptNo();
+            }else {
+                oleRelation=oldParent.getRelationCode();
+                newRelation=newParent.getRelationCode();
+            }
+            sysDeptMapper.updateRelationCode(oleRelation,newRelation,sysDept.getRelationCode());
+        }
+    }
+
+    @Override
+    public void deletedDept(String id) {
+        //查找它和它的叶子节点
+        SysDept sysDept=sysDeptMapper.selectByPrimaryKey(id);
+        if(sysDept==null){
+            log.info("传入的部门id在数据库不存在{}",id);
+            throw new BusinessException(BaseResponseCode.DATA_ERROR);
+        }
+        List<String> list = sysDeptMapper.selectChildIds(sysDept.getRelationCode());
+        //判断它和它子集的叶子节点是否关联有用户
+        List<SysUser> sysUsers = userService.selectUserInfoByDeptIds(list);
+        if(!sysUsers.isEmpty()){
+            throw new BusinessException(BaseResponseCode.NOT_PERMISSION_DELETED_DEPT);
+        }
+
+        //逻辑删除部门数据
+        int count=sysDeptMapper.deletedDepts(new Date(),list);
+        if(count==0){
+            throw new BusinessException(BaseResponseCode.OPERATION_ERROR);
+        }
+    }
 
 
 }
