@@ -220,7 +220,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
     @Override
     public List<PermissionRespNodeVO> permissionTreeList(String userId) {
-        return getTree( selectAll(),true);
+        return getTree(getPermissions(userId),true);
     }
 
     @Override
@@ -264,7 +264,7 @@ public class PermissionServiceImpl implements PermissionService {
                             userIdsByRoleIds) {
                         redisService.set(Constant.JWT_REFRESH_KEY+userId,userId,tokenSettings.getAccessTokenExpireTime().toMillis(), TimeUnit.MILLISECONDS);
                         /**
-                         * 清楚用户授权数据缓存
+                         * 清除用户授权数据缓存
                          */
                         redisService.delete(Constant.IDENTIFY_CACHE_KEY+userId);
                     }
@@ -310,6 +310,35 @@ public class PermissionServiceImpl implements PermissionService {
         }
     }
 
+    @Override
+    public List<String> getPermissionByUserId(String userId) {
 
+        List<SysPermission> permissions = getPermissions(userId);
+        if(permissions==null||permissions.isEmpty()){
+            return null;
+        }
+        List<String> result=new ArrayList<>();
+        for (SysPermission s:
+                permissions) {
+            if(!StringUtils.isEmpty(s.getPerms())){
+                result.add(s.getPerms());
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<SysPermission> getPermissions(String userId) {
+        List<String> roleIdsByUserId = userRoleService.getRoleIdsByUserId(userId);
+        if(roleIdsByUserId.isEmpty()){
+            return null;
+        }
+        List<String> permissionIdsByRoleIds = rolePermissionService.getPermissionIdsByRoleIds(roleIdsByUserId);
+        if (permissionIdsByRoleIds.isEmpty()){
+            return null;
+        }
+        List<SysPermission> result=sysPermissionMapper.selectByIds(permissionIdsByRoleIds);
+        return result;
+    }
 
 }

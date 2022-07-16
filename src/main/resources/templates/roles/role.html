@@ -51,7 +51,7 @@
     </div>
 </div>
 <div class="role_table_div">
-    <div id="searchParam">
+    <div id="searchParam" shiro:hasPermission="sys:role:list">
         <div class="layui-form-item">
             <div class="layui-input-inline">
                 <input type="text" id="roleId" class="layui-input"  autocomplete="off" placeholder="请输入角色ID">
@@ -81,14 +81,14 @@
 </body>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-group">
-        <button type="button" class="layui-btn" lay-event="addNewRole" >
+        <button type="button" class="layui-btn" lay-event="addNewRole" shiro:hasPermission="sys:role:add">
             <i class="layui-icon">&#xe608;</i> 新增角色
         </button>
     </div>
 </script>
 <script type="text/html" id="tool">
-    <a class="layui-btn layui-btn-xs" lay-event="edit" >编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sys:role:update">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sys:role:delete">删除</a>
 </script>
 <script src="/layui/layui.js"></script>
 <script src="/js/core.util.js"></script>
@@ -109,6 +109,7 @@
             status:null,
             startTime:null,
             endTime:null
+
         }
         /*动态获取数据*/
         CoreUtil.sendAjax("/api/roles",JSON.stringify(searchParam),function (res) {
@@ -118,7 +119,12 @@
             if(res.data.list !=null){
                 loadTable(res.data.list);
             }
-        },"POST",false);
+        },"POST",false,function (res) {
+            //无权限访问角色列表提示
+            layer.msg("抱歉！您暂无获取角色列表的权限");
+            var noAuthorityData=[];
+            loadTable(noAuthorityData);
+        });
         //渲染分页插件
         var laypageTable = function(count,currentPage) {
             laypage.render({
@@ -189,12 +195,15 @@
                 ,toolbar: '#toolbar'
             });
         };
+
         var initTree=function () {
             CoreUtil.sendAjax("/api/permission/tree/all",null,function (res) {
                 loadPermissionTree(res.data);
             },"GET",false,function (res) {
                 //无权限访问菜单权限树提示
                 layer.msg("抱歉！您暂无获取菜单权限输列表的权限");
+                var noAuthorityData=[];
+                loadPermissionTree(noAuthorityData);
             })};
         //加载权限树数据
         var loadPermissionTree=function (data) {
@@ -236,6 +245,7 @@
                     break;
             }
         });
+
         //监听指定开关
         form.on('switch(switch)', function(){
             $(".operation_role input[name=status]").attr('type', 'hidden').val(this.checked ? 1 : 0);
@@ -319,6 +329,8 @@
 
             }
         });
+
+
         //执行查询
         $("#search").click(function () {
             searchParam.roleId=$("#roleId").val();
@@ -406,22 +418,6 @@
             });
         }
 
-        //删除前确认对话框
-        var tipDialog=function (id,name) {
-            layer.open({
-                content: "确定要删除 "+name+" 角色么",
-                yes: function(index, layero){
-                    layer.close(index); //如果设定了yes回调，需进行手工关闭
-                    CoreUtil.sendAjax("/api/role/"+id,null,function (res) {
-                        layer.msg(res.msg);
-                        $(".layui-laypage-btn").click();
-                    },"DELETE",false,function (res) {
-                        //无权限删除角色提示
-                        layer.msg("抱歉！您暂无删除角色信息详情的权限");
-                    });
-                }
-            });
-        }
     });
 </script>
 </html>

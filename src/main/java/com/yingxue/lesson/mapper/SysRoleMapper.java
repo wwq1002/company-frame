@@ -19,4 +19,5 @@ public interface SysRoleMapper {
     int updateByPrimaryKey(SysRole record);
 
     List<SysRole> selectAll(RolePageReqVO vo);
+    List<String> selectNamesByIds(List<String> ids);
 }

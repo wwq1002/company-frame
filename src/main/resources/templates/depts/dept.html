@@ -60,14 +60,15 @@
 </body>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-group">
-        <button  type="button" class="layui-btn" lay-event="addDept" >
+        <button  type="button" class="layui-btn" lay-event="addDept" shiro:hasPermission="sys:dept:add">
             <i class="layui-icon">&#xe608;</i> 添加
         </button>
     </div>
+
 </script>
 <script type="text/html" id="tool">
-    <a class="layui-btn layui-btn-xs" lay-event="edit" >编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sys:dept:update">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sys:dept:delete">删除</a>
 </script>
 <script src="/layui/layui.js"></script>
 <script src="/js/core.util.js"></script>
@@ -146,7 +147,9 @@
                     ]
                 ]
             });
+
         };
+
         var initTree=function (id) {
             var param={deptId:id}
             CoreUtil.sendAjax("/api/dept/tree",param,function (res) {
@@ -171,6 +174,7 @@
                 }
             });
         };
+
         //新增部门事件
         table.on('toolbar(deptTable)',function (obj) {
             switch (obj.event) {
@@ -196,10 +200,8 @@
                     form.render(); //更新全部
                     initTree("");
                     break;
-
             }
         });
-
 
         //打开部门树对话框
         $(".operation_dept input[name=pidName]").click(function () {
@@ -269,6 +271,7 @@
             }
             return false;
         });
+
         //操作项事件
         table.on('tool(deptTable)',function (obj) {
             var data = obj.data;
@@ -326,7 +329,6 @@
                 }
             });
         };
-
 
     });
 </script>

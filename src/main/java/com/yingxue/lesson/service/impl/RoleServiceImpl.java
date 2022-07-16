@@ -181,4 +181,12 @@ public class RoleServiceImpl implements RoleService {
             }
         }
     }
+    @Override
+    public List<String> getNamesByUserId(String userId) {
+        List<String> roleIdsByUserId = userRoleService.getRoleIdsByUserId(userId);
+        if(roleIdsByUserId.isEmpty()){
+            return null;
+        }
+        return sysRoleMapper.selectNamesByIds(roleIdsByUserId);
+    }
 }

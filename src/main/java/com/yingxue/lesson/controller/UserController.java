@@ -50,6 +50,7 @@ public class UserController {
 
     @PostMapping("/users")
     @ApiOperation(value = "分页查询用户接口")
+    @RequiresPermissions("sys:user:list")
     @MyLog(title = "组织管理-用户管理",action = "分页查询用户接口")
     public DataResult<PageVO<SysUser>> pageInfo(@RequestBody UserPageReqVO vo){
         DataResult result=DataResult.success();
@@ -58,6 +59,7 @@ public class UserController {
     }
     @PostMapping("/user")
     @ApiOperation(value = "新增用户接口")
+    @RequiresPermissions("sys:user:add")
     @MyLog(title = "组织管理-用户管理",action = "新增用户接口")
     public DataResult addUser(@RequestBody @Valid UserAddReqVO vo){
         DataResult result=DataResult.success();
@@ -67,6 +69,7 @@ public class UserController {
     @GetMapping("/user/roles/{userId}")
     @ApiOperation(value = "查询用户拥有的角色数据接口")
     @MyLog(title = "组织管理-用户管理",action = "查询用户拥有的角色数据接口")
+    @RequiresPermissions("sys:user:role:update")
     public DataResult<UserOwnRoleRespVO> getUserOwnRole(@PathVariable("userId") String userId){
         DataResult result=DataResult.success();
         result.setData(userService.getUserOwnRole(userId));
@@ -76,6 +79,7 @@ public class UserController {
     @PutMapping("/user/roles")
     @ApiOperation(value = "保存用户拥有的角色信息接口")
     @MyLog(title = "组织管理-用户管理",action = "保存用户拥有的角色信息接口")
+    @RequiresPermissions("sys:user:role:update")
     public DataResult saveUserOwnRole(@RequestBody @Valid UserOwnRoleReqVO vo){
         DataResult result=DataResult.success();
         userService.setUserOwnRole(vo);
@@ -95,6 +99,7 @@ public class UserController {
     @DeleteMapping("/user")
     @ApiOperation(value = "批量/删除用户接口")
     @MyLog(title = "组织管理-用户管理",action = "批量/删除用户接口")
+    @RequiresPermissions("sys:user:delete")
     public DataResult deletedUsers(@RequestBody @ApiParam(value = "用户id集合") List<String> list, HttpServletRequest request){
         String accessToken=request.getHeader(Constant.ACCESS_TOKEN);
         String operationId=JwtTokenUtil.getUserId(accessToken);

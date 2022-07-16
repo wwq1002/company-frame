@@ -86,15 +86,14 @@
 </body>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-group">
-        <button type="button" class="layui-btn" lay-event="addMenu" >
+        <button type="button" class="layui-btn" lay-event="addMenu" shiro:hasPermission="sys:permission:add">
             <i class="layui-icon">&#xe608;</i> 添加
         </button>
     </div>
 </script>
-
 <script type="text/html" id="tool">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sys:permission:update">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sys:permission:delete">删除</a>
 </script>
 <script src="/layui/layui.js"></script>
 <script src="/js/core.util.js"></script>
@@ -115,7 +114,10 @@
             CoreUtil.sendAjax("/api/permissions",null,function (res) {
                 renderTable(res.data);
             },"GET",false,function (res) {
-
+                //无权限访问菜单权限列表提示
+                layer.msg("抱歉！您暂无获取菜单权限列表的权限");
+                var noAuthorityData=[];
+                renderTable(noAuthorityData);
             });
         }
         reloadTreeTable();
@@ -182,6 +184,8 @@
                 ]
             });
         };
+
+
         //初始化菜单权限树
         var initTree=function () {
             CoreUtil.sendAjax("/api/permission/tree",null,function (res) {
@@ -207,8 +211,11 @@
                 }
             });
         };
+
+
         //新增菜单权限事件
         table.on('toolbar(menuTable)',function (obj) {
+
             switch (obj.event) {
                 case 'addMenu':
                     selectNode=null;
@@ -289,6 +296,17 @@
                 }
             });
         });
+
+        //编辑或新增的界面取消事件
+        /*  $("#btn_cancel").click(function() {
+              //显示表格
+              $(".menu-table").show();
+              //隐藏编辑窗口
+              $(".operation_menu").hide();
+              //可以防止在表单事件操作后自动刷新
+              return false;
+          });
+          */
         //监听指定开关
         form.on('switch(switch)', function(){
             $(".operation_menu input[name=status]").attr('type', 'hidden').val(this.checked ? 1 : 0);
@@ -322,6 +340,7 @@
             }
             return false;
         });
+
         //操作项事件
         table.on('tool(menuTable)',function (obj) {
             var data = obj.data;
@@ -366,6 +385,7 @@
                     break;
             }
         });
+
         //删除操作
         var deletedMenu=function(menuId,menuName){
             layer.open({
@@ -382,8 +402,7 @@
                 }
             });
         };
+
     });
-
-
 </script>
 </html>

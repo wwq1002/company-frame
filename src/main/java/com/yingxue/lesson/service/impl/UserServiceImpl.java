@@ -13,10 +13,7 @@ import com.yingxue.lesson.mapper.SysDeptMapper;
 import com.yingxue.lesson.mapper.SysRoleMapper;
 import com.yingxue.lesson.mapper.SysUserMapper;
 import com.yingxue.lesson.mapper.SysUserRoleMapper;
-import com.yingxue.lesson.service.RedisService;
-import com.yingxue.lesson.service.RoleService;
-import com.yingxue.lesson.service.UserRoleService;
-import com.yingxue.lesson.service.UserService;
+import com.yingxue.lesson.service.*;
 import com.yingxue.lesson.utils.JwtTokenUtil;
 import com.yingxue.lesson.utils.PageUtil;
 import com.yingxue.lesson.utils.PasswordUtils;
@@ -60,7 +57,8 @@ public class UserServiceImpl implements UserService {
     private RoleService roleService;
     @Autowired
     private TokenSetting tokenSettings;
-
+    @Autowired
+    private PermissionService permissionService;
 
     @Override
     public LoginRespVO login(LoginReqVO vo) {
@@ -105,27 +103,11 @@ public class UserServiceImpl implements UserService {
      * @throws
      */
     private List<String> getRoleByUserId(String userId){
-      List<String> list=new ArrayList<>();
-      if(userId.equals("9a26f5f1-cbd2-473d-82db-1d6dcf4598f8")){
-          list.add("admin");
-      }else {
-          list.add("dev");
-      }
-      return list;
+        return roleService.getNamesByUserId(userId);
     }
 
     private List<String> getPermissionByUserId(String userId){
-        List<String> list=new ArrayList<>();
-        if(userId.equals("9a26f5f1-cbd2-473d-82db-1d6dcf4598f8")){
-            list.add("sys:user:add");
-            list.add("sys:user:update");
-            list.add("sys:user:delete");
-            list.add("sys:user:list");
-        }else {
-//            list.add("sys:user:list");
-            list.add("sys:user:add");
-        }
-        return list;
+        return permissionService.getPermissionByUserId(userId);
     }
 
     @Override
@@ -176,6 +158,7 @@ public class UserServiceImpl implements UserService {
         /**
          * 清楚用户授权数据缓存
          */
+        redisService.delete(Constant.IDENTIFY_CACHE_KEY+vo.getUserId());
     }
     @Override
     public String refreshToken(String refreshToken) {

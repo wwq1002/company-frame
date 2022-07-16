@@ -24,4 +24,6 @@ public interface PermissionService {
     List<PermissionRespNodeVO> selectAllTree();
     void updatePermission(PermissionUpdateReqVO vo);
     void deletedPermission(String permissionId);
+    List<String> getPermissionByUserId(String userId);
+    List<SysPermission> getPermissions(String userId);
 }

@@ -200,4 +200,19 @@
     from sys_permission
     where pid=#{permissionId} and deleted=1
   </select>
+
+  <!-- @Description:     通过id集合获取信息-->
+  <!-- @Author:          小霍-->
+  <select id="selectByIds" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from sys_permission
+    where id in
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    and deleted=1
+    and `status`=1
+    order by order_num desc
+  </select>
+
 </mapper>

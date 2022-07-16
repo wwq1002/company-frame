@@ -31,6 +31,7 @@ public class LogController {
 
     @PostMapping("/logs")
     @ApiOperation(value = "分页查找操作日志接口")
+    @RequiresPermissions("sys:log:list")
     public DataResult<PageVO<SysLog>> pageInfo(@RequestBody SysLogPageReqVO vo){
         PageVO<SysLog> sysLogPageVO = logService.pageInfo(vo);
         DataResult result=DataResult.success();
@@ -40,6 +41,7 @@ public class LogController {
     @DeleteMapping("/log")
     @ApiOperation(value = "删除日志接口")
     @MyLog(title = "系统管理-日志管理",action = "删除日志接口")
+    @RequiresPermissions("sys:log:list")
     public DataResult deletedLog(@RequestBody @ApiParam(value = "日志id集合") List<String> logIds){
         logService.deletedLog(logIds);
         DataResult result=DataResult.success();
