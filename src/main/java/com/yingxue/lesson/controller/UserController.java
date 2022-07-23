@@ -85,7 +85,16 @@ public class UserController {
         userService.setUserOwnRole(vo);
         return result;
     }
-
+    @GetMapping("/user/token")
+    @ApiOperation(value = "jwt token 刷新接口")
+    @MyLog(title = "组织管理-用户管理",action = "jwt token 刷新接口")
+    public DataResult<String> refreshToken(HttpServletRequest request){
+        String refreshToken=request.getHeader(Constant.REFRESH_TOKEN);
+        String newAccessToken = userService.refreshToken(refreshToken);
+        DataResult result=DataResult.success();
+        result.setData(newAccessToken);
+        return result;
+    }
     @PutMapping("/user")
     @ApiOperation(value ="列表修改用户信息接口")
     @MyLog(title = "组织管理-用户管理",action = "列表修改用户信息接口")

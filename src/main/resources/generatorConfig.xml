@@ -56,7 +56,7 @@
             <columnOverride column="status" javaType="java.lang.Integer"/>
             <columnOverride column="create_where" javaType="java.lang.Integer"/>
             <columnOverride column="deleted" javaType="java.lang.Integer"/>
-        </table>-->
+        </table>
 
         <table tableName="sys_dept" domainObjectName="SysDept"
 
@@ -110,7 +110,23 @@
                enableSelectByExample="false"
                selectByExampleQueryId="true">
         </table>
+        <table tableName="sys_file" domainObjectName="SysFile"
 
-
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="true">
+            <columnOverride column="type" javaType="java.lang.Integer"/>
+        </table>-->
+        <!-- 注释掉其它的table -->
+        <table tableName="sys_rotation_chart" domainObjectName="SysRotationChart"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="true">
+            <columnOverride column="sort" javaType="java.lang.Integer"/>
+        </table>
     </context>
 </generatorConfiguration>

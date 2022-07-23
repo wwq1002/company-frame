@@ -72,5 +72,8 @@ public class Constant {
     public static final String IDENTIFY_CACHE_KEY="shiro-cache:com.yingxue.lesson.shiro.CustomRealm.authorizationCache:";
 
 
-
+    /**
+     * 获取上传的文件类型key
+     */
+    public static final String FILE_TYPE="file-type_";
 }

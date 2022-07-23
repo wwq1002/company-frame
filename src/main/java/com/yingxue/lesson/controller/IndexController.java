@@ -90,4 +90,22 @@ public class IndexController {
     public String userpwd() {
         return "users/user_pwd";
     }
+
+    @GetMapping("/rotations")
+    @ApiOperation(value = "轮播图管理页面入口")
+    public String rotations(){
+        return "rotations/rotation";
+    }
+    @GetMapping("/rotation/show")
+    @ApiOperation(value = "轮播图前端页面展示入口")
+    public String rotationShow(){
+        return "rotations/rotation_show";
+    }
+
+
+    @GetMapping("/files")
+    @ApiOperation(value ="我的文件页面入口")
+    public String myFile(){
+        return "files/my_file";
+    }
 }
